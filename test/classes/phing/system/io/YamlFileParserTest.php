@@ -48,13 +48,10 @@ class YamlFileParserTest extends PHPUnit_Framework_TestCase
      * @{inheritDoc}
      */
     public function setUp() {
-<<<<<<< HEAD
         if (!class_exists('Symfony\Component\Yaml\Yaml')) {
             $this->markTestSkipped('Yaml is not installed.');
             exit;
         }
-=======
->>>>>>> Created a FilerParserFactory to decide based on file extension what kind of fileparser should be used to parse config files and set properties.
         $this->yamlFileStub = PHING_TEST_BASE .  "/etc/system/io/config.yml";
         $this->incorrectYamlFileStub = PHING_TEST_BASE .  "/etc/system/io/config_wrong.yml";
         $this->objectToTest = new YamlFileParser();
@@ -89,28 +86,14 @@ class YamlFileParserTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-<<<<<<< HEAD
      * The YamlFileParser has to provide a flattend array which then is compatible to the actual behaviour of properties.
      *
-=======
->>>>>>> Created a FilerParserFactory to decide based on file extension what kind of fileparser should be used to parse config files and set properties.
      * @covers IniFileParser::parseFile
      */
     public function testParseFileFile() {
         $file = new PhingFile($this->yamlFileStub);
         $properties = $this->objectToTest->parseFile($file);
 
-<<<<<<< HEAD
-        $this->assertEquals('testvalue', $properties['testarea']);
-        $this->assertEquals(1, $properties['testarea1.testkey1']);
-        $this->assertEquals(2, $properties['testarea1.testkey2']);
-        $this->assertEquals('testvalue1,testvalue2,testvalue3', $properties['testarea2']);
-        $this->assertEquals(false, $properties['testarea3']);
-        $this->assertEquals(true, $properties['testarea4']);
-        $this->assertEquals('testvalue1', $properties['testarea6.testkey1.testkey1']);
-        $this->assertEquals('testvalue2', $properties['testarea6.testkey1.testkey2']);
-        $this->assertEquals('testvalue1', $properties['testarea6.testkey2.testkey1']);
-=======
         $this->assertEquals($properties['testarea'], 'testvalue');
         $this->assertArrayHasKey(0, $properties['testarea1']);
         $this->assertArrayHasKey(1, $properties['testarea1']);
@@ -130,6 +113,5 @@ class YamlFileParserTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('testkey1', $properties['testarea6']['testkey2']);
         $this->assertEquals($properties['testarea6']['testkey1']['testkey1'], 'testvalue1');
         $this->assertEquals($properties['testarea6']['testkey1']['testkey1'], 'testvalue1');
->>>>>>> Created a FilerParserFactory to decide based on file extension what kind of fileparser should be used to parse config files and set properties.
     }
 }
