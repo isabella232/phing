@@ -22,6 +22,8 @@
 
 include_once 'phing/Task.php';
 include_once 'phing/system/util/Properties.php';
+include_once 'phing/system/io/FileParserFactoryInterface.php';
+include_once 'phing/system/io/FileParserFactory.php';
 
 /**
  * Task for setting properties in buildfiles.
@@ -59,6 +61,19 @@ class PropertyTask extends Task {
 
     /** Whether to log messages as INFO or VERBOSE  */
     protected $logOutput = true;
+
+    /**
+     * @var FileParserFactoryInterface
+     */
+    private $fileParserFactory;
+
+    /**
+     * @param FileParserFactoryInterface $fileParserFactory
+     */
+    public function __construct(FileParserFactoryInterface $fileParserFactory = null)
+    {
+        $this->fileParserFactory = $fileParserFactory != null ? $fileParserFactory : new FileParserFactory();
+    }
 
     /**
      * Sets a the name of current property component
@@ -330,6 +345,8 @@ class PropertyTask extends Task {
      * @param PhingFile $file
      */
     protected function loadFile(PhingFile $file) {
+        $fileParser = $this->fileParserFactory->createParser($file->getFileExtension());
+
         $props = new Properties();
         $this->log("Loading ". $file->getAbsolutePath(), $this->logOutput ? Project::MSG_INFO : Project::MSG_VERBOSE);
         try { // try to load file
@@ -352,8 +369,9 @@ class PropertyTask extends Task {
      * @return void
      */
     protected function resolveAllProperties(Properties $props) {
-        
+
         foreach ($props->keys() as $name) {
+
             // There may be a nice regex/callback way to handle this
             // replacement, but at the moment it is pretty complex, and
             // would probably be a lot uglier to work into a preg_replace_callback()
