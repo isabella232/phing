@@ -18,7 +18,6 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
-require_once 'PHPUnit/Framework/TestCase.php';
 include_once 'phing/system/io/YamlFileParser.php';
 include_once 'phing/system/io/FileParserInterface.php';
 
@@ -49,10 +48,13 @@ class YamlFileParserTest extends PHPUnit_Framework_TestCase
      * @{inheritDoc}
      */
     public function setUp() {
+<<<<<<< HEAD
         if (!class_exists('Symfony\Component\Yaml\Yaml')) {
             $this->markTestSkipped('Yaml is not installed.');
             exit;
         }
+=======
+>>>>>>> Created a FilerParserFactory to decide based on file extension what kind of fileparser should be used to parse config files and set properties.
         $this->yamlFileStub = PHING_TEST_BASE .  "/etc/system/io/config.yml";
         $this->incorrectYamlFileStub = PHING_TEST_BASE .  "/etc/system/io/config_wrong.yml";
         $this->objectToTest = new YamlFileParser();
@@ -87,14 +89,18 @@ class YamlFileParserTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+<<<<<<< HEAD
      * The YamlFileParser has to provide a flattend array which then is compatible to the actual behaviour of properties.
      *
+=======
+>>>>>>> Created a FilerParserFactory to decide based on file extension what kind of fileparser should be used to parse config files and set properties.
      * @covers IniFileParser::parseFile
      */
     public function testParseFileFile() {
         $file = new PhingFile($this->yamlFileStub);
         $properties = $this->objectToTest->parseFile($file);
 
+<<<<<<< HEAD
         $this->assertEquals('testvalue', $properties['testarea']);
         $this->assertEquals(1, $properties['testarea1.testkey1']);
         $this->assertEquals(2, $properties['testarea1.testkey2']);
@@ -104,5 +110,26 @@ class YamlFileParserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('testvalue1', $properties['testarea6.testkey1.testkey1']);
         $this->assertEquals('testvalue2', $properties['testarea6.testkey1.testkey2']);
         $this->assertEquals('testvalue1', $properties['testarea6.testkey2.testkey1']);
+=======
+        $this->assertEquals($properties['testarea'], 'testvalue');
+        $this->assertArrayHasKey(0, $properties['testarea1']);
+        $this->assertArrayHasKey(1, $properties['testarea1']);
+        $this->assertArrayHasKey('testvalue1', $properties['testarea1'][0]);
+        $this->assertArrayHasKey('testvalue2', $properties['testarea1'][1]);
+        $this->assertEquals($properties['testarea1'][0]['testvalue1'], 1);
+        $this->assertEquals($properties['testarea1'][1]['testvalue2'], 2);
+        $this->assertArrayHasKey(0, $properties['testarea2'][0]);
+        $this->assertArrayHasKey(2, $properties['testarea2'][0]);
+        $this->assertEquals($properties['testarea2'][0][0], 'testvalue1');
+        $this->assertEquals($properties['testarea2'][0][2], 'testvalue3');
+        $this->assertEquals($properties['testarea3'], false);
+        $this->assertEquals($properties['testarea4'], true);
+        $this->assertArrayHasKey('testkey1', $properties['testarea6']);
+        $this->assertArrayHasKey('testkey2', $properties['testarea6']);
+        $this->assertArrayHasKey('testkey1', $properties['testarea6']['testkey1']);
+        $this->assertArrayHasKey('testkey1', $properties['testarea6']['testkey2']);
+        $this->assertEquals($properties['testarea6']['testkey1']['testkey1'], 'testvalue1');
+        $this->assertEquals($properties['testarea6']['testkey1']['testkey1'], 'testvalue1');
+>>>>>>> Created a FilerParserFactory to decide based on file extension what kind of fileparser should be used to parse config files and set properties.
     }
 }

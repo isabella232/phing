@@ -19,6 +19,7 @@
  * <http://phing.info>.
  */
 include_once 'phing/system/io/FileParserInterface.php';
+include_once 'autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;

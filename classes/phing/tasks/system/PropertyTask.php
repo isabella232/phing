@@ -368,7 +368,7 @@ class PropertyTask extends Task {
      * @return void
      */
     protected function resolveAllProperties(Properties $props) {
-
+        
         foreach ($props->keys() as $name) {
 
             // There may be a nice regex/callback way to handle this
