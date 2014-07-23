@@ -76,7 +76,7 @@ class Properties {
      */
     function load(PhingFile $file) {
         if ($file->canRead()) {
-            $this->parse($file->getPath(), false);                    
+            $this->parse($file, false);
 
             $this->file = $file;
         } else {
