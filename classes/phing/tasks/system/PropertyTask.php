@@ -321,7 +321,7 @@ class PropertyTask extends Task {
      */
     protected function addProperty($name, $value) {
         if (count($this->filterChains) > 0) {
-            $in = FileUtils::getChainedReader(new StringReader($value), $this->filterChains, $this->project);        
+            $in = FileUtils::getChainedReader(new StringReader($value), $this->filterChains, $this->project);
             $value = $in->read();
         }
         
